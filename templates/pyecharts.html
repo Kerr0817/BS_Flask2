@@ -2,25 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Proundly presented by ECharts</title>
-    {% for jsfile_name in script_list %}
-    <script src="{{ host }}/{{ jsfile_name }}.js"></script>
-    {% endfor %}
+    <title>Title</title>
+    <script src="/static0/dist/echarts.min.js"></script>
 </head>
 <body>
-    <div id="{{ chart_id }}" style="width:{{ my_width }};height:{{ my_height }}px;"></div>
+<h1>柱状图</h1>
+<div>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
     <script type="text/javascript">
-        window.onload = function() {
-            setTimeout(function() {
-                var myChart_{{ chart_id }} = echarts.init(document.getElementById('{{ chart_id }}'), null, {renderer: '{{ renderer}}'});
-                {{ custom_function }}
-                var option_{{ chart_id }} = {{ options | safe }};
-                myChart_{{ chart_id }}.setOption(option_{{ chart_id }});
-                window.onresize = function() {
-                    myChart_{{ chart_id }}.resize();
-                };
-            }, 1000);
-        };
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption({{ bar_data | safe }});
     </script>
+
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main2" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart2 = echarts.init(document.getElementById('main2'));
+
+        // 指定图表的配置项和数据
+        var option2 = {{ bar_data | safe }};
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart2.setOption(option2);
+    </script>
+</div>
+
 </body>
 </html>

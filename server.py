@@ -1,36 +1,19 @@
-from pyecharts import Bar
-from pyecharts_javascripthon.api import TRANSLATOR
+from pyecharts.charts import Bar
 from flask import Flask, render_template
-
-
-REMOTE_HOST = "https://pyecharts.github.io/assets/js"
 
 app = Flask(__name__)
 
 
-@app.route("/")
-def hello():
-    _bar = bar_chart()
-    javascript_snippet = TRANSLATOR.translate(_bar.options)
-    return render_template(
-        "pyecharts.html",
-        chart_id=_bar.chart_id,
-        host=REMOTE_HOST,
-        renderer=_bar.renderer,
-        my_width="100%",
-        my_height=600,
-        custom_function=javascript_snippet.function_snippet,
-        options=javascript_snippet.option_snippet,
-        script_list=_bar.get_js_dependencies(),
+@app.route('/')
+def show_Page():
+    bar = (
+        Bar()
+            .add_xaxis(["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"])
+            .add_yaxis("商家A", [5, 20, 36, 10, 75, 90])
     )
-
-
-def bar_chart():
-    bar = Bar("我的第一个图表", "这里是副标题")
-    bar.add(
-        "服装", ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"], [5, 20, 36, 10, 75, 90]
-    )
-    return bar
+    # print(bar.render_embed())
+    # print(bar.dump_options())
+    return render_template("pyecharts.html", bar_data=bar.dump_options())
 
 
 if __name__ == '__main__':

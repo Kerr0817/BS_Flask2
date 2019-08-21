@@ -1,2 +1,0 @@
-from pyecharts import Bar
-
