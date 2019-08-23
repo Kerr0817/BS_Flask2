@@ -22,13 +22,13 @@ def index():
     print('进来了没？？？？')
     return render_template("index.html")
 
-
-@app.route("/barChart")
+'''
+@app.route("/")
 def get_bar_chart():
     c = bar_base()
     print('哎。。。。。。。。。。')
     return c.dump_options_with_quotes()
-
+'''
 
 if __name__ == "__main__":
     app.run()
