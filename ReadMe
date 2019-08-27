@@ -1,0 +1,8 @@
+sever2.py
+本地pyecharts生成html
+flask驱动html
+
+echartsJson.html本地直接调用package.json
+
+文件夹：WeiboSubproject
+复现工程：https://www.cnblogs.com/yangykaifa/p/6886289.html
