@@ -1,19 +1,18 @@
-# coding=gb2312
 import pandas as pd
 
-# ¶ÁÈ¡Êı¾İÔ´ÎÄ¼ş£¬½«Æä¶ÁÈëÄÚ´æ×ª»»³ÉpandasµÄdataframeÊı¾İ±í½á¹¹
-# usecols µÄÒâË¼ÊÇÖ»ÓÃºóÃæÁĞ±íÖĞ´æÔÚµÄÊı¾İ¡£ÕâÀïÖ»ÓÃÈÕÆÚ£¬ÈÈµã»°Ìâ£¬ĞÔ±ğ£¬Ê¡·İ..
+# è¯»å–æ•°æ®æºæ–‡ä»¶ï¼Œå°†å…¶è¯»å…¥å†…å­˜è½¬æ¢æˆpandasçš„dataframeæ•°æ®è¡¨ç»“æ„
+# usecols çš„æ„æ€æ˜¯åªç”¨åé¢åˆ—è¡¨ä¸­å­˜åœ¨çš„æ•°æ®ã€‚è¿™é‡Œåªç”¨æ—¥æœŸï¼Œçƒ­ç‚¹è¯é¢˜ï¼Œæ€§åˆ«ï¼Œçœä»½..
 Data = pd.read_csv('WeiboSubproject/data.csv', usecols=['date', 'topic', 'gender', 'location', 'repostsnum'])
 
 
 def time_paser(kw):
     '''
-        Ê±¼ä±ä»¯Ç÷ÊÆÍ¼
-        ¶ÔÊı¾İ±í½øĞĞÉ¸Ñ¡ ·µ»ØÌÖÂÛÈËÊıËæÊ±¼ä±ä»¯µÄ×ø±êµã£¨x,y£©
-        ¸ñÊ½Îª x=[4/7,4/8,4/9/4/10...]  y=[1000,2000,1000,3000,3000,...]
+        æ—¶é—´å˜åŒ–è¶‹åŠ¿å›¾
+        å¯¹æ•°æ®è¡¨è¿›è¡Œç­›é€‰ è¿”å›è®¨è®ºäººæ•°éšæ—¶é—´å˜åŒ–çš„åæ ‡ç‚¹ï¼ˆx,yï¼‰
+        æ ¼å¼ä¸º x=[4/7,4/8,4/9/4/10...]  y=[1000,2000,1000,3000,3000,...]
     '''
     myData = Data[(Data['topic'] == kw)]
-    myData['date'] = pd.to_datetime(myData['date']).dt.normalize()
+    myData.loc[:, 'date'] = pd.to_datetime(myData['date']).dt.normalize()
     pf = myData.groupby('date').size()
     pf = pf['2014/4/27':'2014/5/16']
     x = [str(i)[:10] for i in pf.index]
@@ -25,10 +24,10 @@ def time_paser(kw):
 
 def gender_paser(kw):
     '''
-        ÓÃ»§ĞÔ±ğ·Ö²¼Í¼
-        ¶ÔÊı¾İ±í½øĞĞÉ¸Ñ¡ ·µ»Ø²ÎÓëÖ¸¶¨µ¥Ò»»°ÌâµÄĞÔ±ğ·Ö²¼¡£
-        ¸ñÊ½Îª[{'name':'m','value':8000},{'name':'f','value':9000}]
-        mÖ¸µÄÊÇÄĞĞÔ£¬fÖ¸µÄÊÇÅ®ĞÔ¡£
+        ç”¨æˆ·æ€§åˆ«åˆ†å¸ƒå›¾
+        å¯¹æ•°æ®è¡¨è¿›è¡Œç­›é€‰ è¿”å›å‚ä¸æŒ‡å®šå•ä¸€è¯é¢˜çš„æ€§åˆ«åˆ†å¸ƒã€‚
+        æ ¼å¼ä¸º[{'name':'m','value':8000},{'name':'f','value':9000}]
+        mæŒ‡çš„æ˜¯ç”·æ€§ï¼ŒfæŒ‡çš„æ˜¯å¥³æ€§ã€‚
     '''
     myData = Data[(Data['topic'] == kw)]
     pf = myData.groupby('gender').size()
@@ -40,17 +39,17 @@ def gender_paser(kw):
 
 def topic_paser(kw):
     '''
-        µ¥¸ö»°ÌâÔÚ×Ü»°ÌâÖĞµÄÕ¼±È
-        ¶ÔÊı¾İ±í½øĞĞÉ¸Ñ¡ ·µ»Øµ¥Ò»Ö¸¶¨»°ÌâÔÚ×Ü»°ÌâÖĞµÄÕ¼±È
-        ¸ñÊ½Îª[{'name':'ÈÈµã»°Ìâ1','value':8000},{'name':'ÆäËûÈ«²¿»°Ìâ','value':80000}]
-        ×ª»»µÄÊıÖµ£¬ÓÉÇ°¶Ëecharts»æÍ¼µÄÊ±ºò»á×Ô¶¯×ª»¯³É°Ù·Ö±ÈĞÎÊ½¡£
+        å•ä¸ªè¯é¢˜åœ¨æ€»è¯é¢˜ä¸­çš„å æ¯”
+        å¯¹æ•°æ®è¡¨è¿›è¡Œç­›é€‰ è¿”å›å•ä¸€æŒ‡å®šè¯é¢˜åœ¨æ€»è¯é¢˜ä¸­çš„å æ¯”
+        æ ¼å¼ä¸º[{'name':'çƒ­ç‚¹è¯é¢˜1','value':8000},{'name':'å…¶ä»–å…¨éƒ¨è¯é¢˜','value':80000}]
+        è½¬æ¢çš„æ•°å€¼ï¼Œç”±å‰ç«¯echartsç»˜å›¾çš„æ—¶å€™ä¼šè‡ªåŠ¨è½¬åŒ–æˆç™¾åˆ†æ¯”å½¢å¼ã€‚
     '''
     data = Data.groupby('topic').size()
     myData = Data[(Data['topic'] == kw)]
     pf = myData.groupby('topic').size()
     res = [
         {"value": int(pf.values), "name": kw},
-        {"value": int(data.sum()) - int(pf.values), "name": 'ÆäËû'},
+        {"value": int(data.sum()) - int(pf.values), "name": 'å…¶ä»–'},
     ]
 
     return res
@@ -72,17 +71,17 @@ def remove_whitespace(x):
 
 def city_paser(kw):
     '''
-        µ¥¸ö»°ÌâÌÖÂÛÈËÊıµÄµØÇø·Ö²¼Í¼
-        ¶ÔÊı¾İ±í½øĞĞÉ¸Ñ¡ ·µ»Øµ¥Ò»Ö¸¶¨»°ÌâÖĞÌÖÂÛÈËÈºµÄµØÇø·Ö²¼¡£
-        ¸ñÊ½Îª[{'name':'±±¾©','value':600},{'name':'ÄÏ¾©','value':300}.¡£¡£¡£]
-        ÔÚÇ°¶Ëecharts»æÍ¼Ê±£¬²»Í¬´óĞ¡µÄvalueÔÚµØÍ¼ÉÏµÄÑÕÉ«ÉîÇ³²»Í¬£¬
-        Í¨¹ıÑÕÉ«±ä»¯¿ÉÒÔÖ±¹Û·¢ÏÖ£¬²ÎÓëÌÖÂÛ»°ÌâµÄÈËÈºµØÀíÎ»ÖÃ·Ö²¼¡£
+        å•ä¸ªè¯é¢˜è®¨è®ºäººæ•°çš„åœ°åŒºåˆ†å¸ƒå›¾
+        å¯¹æ•°æ®è¡¨è¿›è¡Œç­›é€‰ è¿”å›å•ä¸€æŒ‡å®šè¯é¢˜ä¸­è®¨è®ºäººç¾¤çš„åœ°åŒºåˆ†å¸ƒã€‚
+        æ ¼å¼ä¸º[{'name':'åŒ—äº¬','value':600},{'name':'å—äº¬','value':300}.ã€‚ã€‚ã€‚]
+        åœ¨å‰ç«¯echartsç»˜å›¾æ—¶ï¼Œä¸åŒå¤§å°çš„valueåœ¨åœ°å›¾ä¸Šçš„é¢œè‰²æ·±æµ…ä¸åŒï¼Œ
+        é€šè¿‡é¢œè‰²å˜åŒ–å¯ä»¥ç›´è§‚å‘ç°ï¼Œå‚ä¸è®¨è®ºè¯é¢˜çš„äººç¾¤åœ°ç†ä½ç½®åˆ†å¸ƒã€‚
     '''
     myData = Data[(Data['topic'] == kw)]
-    myData['location'] = myData['location'].astype(str)
-    myData['location'] = myData['location'].apply(lambda x: str(x)[:3])
-    myData['location'] = myData['location'].apply(lambda x: remove_whitespace(x))
-    myData = myData[(myData['location'] != 'ÆäËû') & (myData['location'] != 'º£Íâ')]
+    myData.loc['location'] = myData['location'].astype(str)
+    myData.loc['location'] = myData['location'].apply(lambda x: str(x)[:3])
+    myData.loc['location'] = myData['location'].apply(lambda x: remove_whitespace(x))
+    myData = myData[(myData['location'] != 'å…¶ä»–') & (myData['location'] != 'æµ·å¤–')]
     pf = myData.groupby('location').size()
     res = []
     for k, v in dict(zip([str(i) for i in pf.index], [int(j) for j in pf.values])).items():

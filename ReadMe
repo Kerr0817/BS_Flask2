@@ -2,7 +2,15 @@ sever2.py
 本地pyecharts生成html
 flask驱动html
 
-echartsJson.html本地直接调用package.json
+offllineJson/echartsJson.html
+本地直接调用package.json
+http://www.ishenping.com/ArtInfo/1824349.html
 
 文件夹：WeiboSubproject
-复现工程：https://www.cnblogs.com/yangykaifa/p/6886289.html
+本地读取csv数据，pandas管理，输出json，flask本地驱动
+https://blog.csdn.net/qq_41664845/article/details/80454543
+
+
+pyecharts
+网上资源https://github.com/pyecharts/pyecharts
+https://github.com/pyecharts/pyecharts-assets

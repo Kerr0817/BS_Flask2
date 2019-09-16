@@ -13,7 +13,7 @@ from pyecharts.globals import ThemeType
 
 
 app = Flask(__name__, static_folder="templates")
-
+# app.config['DEBUG'] = True    # 开不了debug模式
 
 def bar_base() -> Bar:
     c = (
@@ -32,11 +32,15 @@ def bar_base() -> Bar:
 def index():
     c = bar_base()
     print('IGUO server is connecting')
+    app.logger.debug('A value for debugging')
+    app.logger.warning('A warning occurred (%d apples)', 42)
+    app.logger.error('An error occurred')
 #    return Markup(c.render_embed()) 跑templates里的html
 #    return c.dump_options_with_quotes()  # 返回json字符
-    c.render("templates/my.html")  # 生成html在tempaltes里
+#    c.render("templates/my.html")  # 生成html在tempaltes里
     return render_template("my.html")  # 驱动templates里的html
 
 
 if __name__ == "__main__":
-    app.run()
+    # app.debug = True    # 开不了调试模式
+    app.run()      # debug=True，开不了debug模式
